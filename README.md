@@ -140,6 +140,7 @@ A staged approach was taken to assess both feasibility and longer-term viability
 ***Advantages:***
 - Transparent and auditable pipeline
 - Interpretable outputs with localized errors
+
 ***Limitations:***
 - Sensitive to minor shifts in alignment or spacing
 - Pipeline complexity increases with variability
@@ -153,8 +154,9 @@ This method is more aligned with deployment environments requiring high explaina
 ***Advantages:***
 - More robust to spacing, noise, or minor distortions
 - Scales better to more complex captchas
+
 ***Limitations:***
-- Reduced interpretability
+- Reduced interpretability as the OCR model is a black-box process
 - Requires significant computational investment and data augmentation
 
 This approach is more suitable for long-term robustness but introduces governance concerns around transparency, model validation, and debugging.
