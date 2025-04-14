@@ -109,7 +109,7 @@ class Captcha:
 
 ---
 ## Strategy and Thought Process
-###Problem Framing###
+### Problem Framing
 
 The objective is to build a system capable of accurately interpreting 5-character CAPTCHA images for a web form. These CAPTCHA images follow a tightly controlled structure:
 - Each CAPTCHA consists of exactly 5 characters.
@@ -124,11 +124,11 @@ From a trust and governance standpoint:
 - Future generalisation must consider potential drift in background noise or character rendering.
 - This framing assumes that the long-term goal is not just functional performance, but also robustness, interpretability, and auditability—especially relevant for AI deployed in production or regulated environments.
 
-###Solution Formulation###
+### Solution Formulation
 
 A staged approach was taken to assess both feasibility and longer-term viability. Early efforts focused on establishing baseline performance using pre-trained OCR models with image preprocessing. This allowed us to identify architectural weaknesses and transition toward more robust strategies.
 
-###Strategies Hypothesized###
+### Strategies Hypothesized
 
 ***Strategy 1***: Background Removal with Character Segmentation
 - Segment each character based on projection/contour.
@@ -164,7 +164,7 @@ This approach is more suitable for long-term robustness but introduces governanc
 - Small sample size available
 - Ability to quickly iterate
 
-###Initial Experiments: OCR Baseline with Preprocessing###
+### Initial Experiments: OCR Baseline with Preprocessing
 
 Initial experiments used OCR libraries (EasyOCR and Tesseract) in conjunction with various preprocessing techniques aimed at improving text visibility and suppressing the uniform background.
 
