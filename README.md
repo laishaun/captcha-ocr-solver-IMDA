@@ -54,7 +54,7 @@ pip install -r requirements.txt
 
 ## 🚀 Usage
 
-1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`.
+1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`. (Samples are available in the sample_captchas folder for your convenience to drag and drop)
 
 2. Run the OCR script:
 
