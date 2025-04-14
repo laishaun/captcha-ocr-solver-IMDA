@@ -1,6 +1,6 @@
 # Captcha OCR Solver (Strategy 2: Preprocessing + OCR)
 
-This project implements a simple OCR pipeline to recognize 5-character captchas. It uses contrast enhancement to preprocess images and EasyOCR to extract the characters. The setup allows reviewers to easily test new captchas and view prediction results.
+This project implements a simple OCR pipeline to recognize 5-character captchas. It uses contrast enhancement to preprocess images and EasyOCR to extract the characters. This was coded using python 3.13.3
 
 ---
 
@@ -54,12 +54,12 @@ pip install -r requirements.txt
 
 ## 🚀 Usage
 
-1. Place your test captcha images in the `test_images/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`.
+1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`.
 
 2. Run the OCR script:
 
 ```bash
-python run.py --input test_images/ --output outputs/
+python run.py --input images_to_test/ --output outputs/
 ```
 
 3. Each result will be saved as a `.txt` file inside the `outputs/` folder, using the same base filename.
