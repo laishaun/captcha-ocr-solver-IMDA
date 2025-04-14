@@ -109,7 +109,8 @@ class Captcha:
 
 ---
 ## Strategy and Thought Process
-**Problem Framing**
+###Problem Framing###
+
 The objective is to build a system capable of accurately interpreting 5-character CAPTCHA images for a web form. These CAPTCHA images follow a tightly controlled structure:
 - Each CAPTCHA consists of exactly 5 characters.
 - The allowable characters are limited to uppercase alphabets (A–Z) and digits (0–9).
@@ -123,45 +124,48 @@ From a trust and governance standpoint:
 - Future generalisation must consider potential drift in background noise or character rendering.
 - This framing assumes that the long-term goal is not just functional performance, but also robustness, interpretability, and auditability—especially relevant for AI deployed in production or regulated environments.
 
-**Solution Formulation**
+###Solution Formulation###
+
 A staged approach was taken to assess both feasibility and longer-term viability. Early efforts focused on establishing baseline performance using pre-trained OCR models with image preprocessing. This allowed us to identify architectural weaknesses and transition toward more robust strategies.
 
-**Strategies Hypothesized**
-Strategy 1: Background Removal with Character Segmentation
+###Strategies Hypothesized###
+
+***Strategy 1***: Background Removal with Character Segmentation
 - Segment each character based on projection/contour.
 - Use classical image processing to remove the consistent background.
 - Train a lightweight CNN to classify each of the 5 characters individually.
 
-Advantages:
+***Advantages:***
 - Transparent and auditable pipeline
 - Interpretable outputs with localized errors
 
-Limitations:
+***Limitations:***
 - Sensitive to minor shifts in alignment or spacing
 - Pipeline complexity increases with variability
 - Computationally heavy
 This method is more aligned with deployment environments requiring high explainability and deterministic behavior.
 
-Strategy 2: OCR Baseline with Preprocessing
+***Strategy 2***: OCR Baseline with Preprocessing
 - Based on initial observations, captchas provided were easily manipulated through manipulation of contrast and brightness
 - Use of pre-trained OCR models would be fast and simple solution 
 
-Advantages:
+***Advantages:***
 - More robust to spacing, noise, or minor distortions
 - Scales better to more complex captchas
 
-Limitations:
+***Limitations:***
 - Reduced interpretability
 - Requires significant computational investment and data augmentation
 
 This approach is more suitable for long-term robustness but introduces governance concerns around transparency, model validation, and debugging.
 
-Conclusion: Strategy 2 was the primary approach adopted in the initial experiments due to 
+***Conclusion***: Strategy 2 was the primary approach adopted in the initial experiments due to 
 - Ability to perform rapid prototyping with COTS models
 - Small sample size available
 - Ability to quickly iterate
 
-**Initial Experiments: OCR Baseline with Preprocessing**
+###Initial Experiments: OCR Baseline with Preprocessing###
+
 Initial experiments used OCR libraries (EasyOCR and Tesseract) in conjunction with various preprocessing techniques aimed at improving text visibility and suppressing the uniform background.
 
 Preprocessing methods evaluated:
@@ -172,7 +176,7 @@ Preprocessing methods evaluated:
 - Segmentation (character isolation)
 - Cropping and upscaling
 
-Results:
+***Results***:
 - Best result: 13/24 correct predictions using EasyOCR with grayscale and brightness/contrast tuning.
 - Worst results: Segmentation and background subtraction introduced artifacts that reduced accuracy.
 - Tesseract generally underperformed due to its reliance on semantic and contextual information (absent in captchas).
