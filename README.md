@@ -124,9 +124,11 @@ From a trust and governance standpoint:
 - Future generalisation must consider potential drift in background noise or character rendering.
 - This framing assumes that the long-term goal is not just functional performance, but also robustness, interpretability, and auditability—especially relevant for AI deployed in production or regulated environments.
 
+
 ### Solution Formulation
 
 A staged approach was taken to assess both feasibility and longer-term viability. Early efforts focused on establishing baseline performance using pre-trained OCR models with image preprocessing. This allowed us to identify architectural weaknesses and transition toward more robust strategies.
+
 
 ### Strategies Hypothesized
 
@@ -138,7 +140,6 @@ A staged approach was taken to assess both feasibility and longer-term viability
 ***Advantages:***
 - Transparent and auditable pipeline
 - Interpretable outputs with localized errors
-
 ***Limitations:***
 - Sensitive to minor shifts in alignment or spacing
 - Pipeline complexity increases with variability
@@ -152,7 +153,6 @@ This method is more aligned with deployment environments requiring high explaina
 ***Advantages:***
 - More robust to spacing, noise, or minor distortions
 - Scales better to more complex captchas
-
 ***Limitations:***
 - Reduced interpretability
 - Requires significant computational investment and data augmentation
@@ -163,6 +163,7 @@ This approach is more suitable for long-term robustness but introduces governanc
 - Ability to perform rapid prototyping with COTS models
 - Small sample size available
 - Ability to quickly iterate
+
 
 ### Initial Experiments: OCR Baseline with Preprocessing
 
