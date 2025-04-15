@@ -60,7 +60,7 @@ pip install -r requirements.txt
 2. Run the OCR script:
 
 ```bash
-python run.py --input images_to_test/ --output output/
+python run.py
 ```
 
 3. Each result will be saved as a `.txt` file inside the `output/` folder, using the same base filename.
