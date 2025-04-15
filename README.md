@@ -1,4 +1,4 @@
-# Captcha OCR Solver (Strategy 2: Preprocessing + OCR)
+# Captcha OCR Solver (Main Strategy: Preprocessing + OCR)
 
 This project implements a simple OCR pipeline to recognize 5-character captchas. It uses contrast enhancement to preprocess images and EasyOCR to extract the characters. This was coded using python 3.13.3
 
@@ -16,11 +16,12 @@ This project implements a simple OCR pipeline to recognize 5-character captchas.
 
 ```
 captcha-ocr-solver/
-├── captcha/
-│   └── solver.py           # Contains the Captcha class
-├── test_images/            # Drop your input captcha images here
-├── outputs/                # Output .txt files will be saved here
+├── captcha_solver/
+│   └── SolverMain.py       # Contains the main captcha solver class
+├── images_to_test/         # Drop your input captcha images here
+├── output/                 # Output .txt files will be saved here
 ├── run.py                  # Script to run OCR on a folder of images
+├── sample_captchas         # Sample images provided in the original challenge (also used as base set for background model)
 ├── requirements.txt        # List of required Python packages
 ├── .gitignore              # Standard Git ignore rules
 └── README.md               # This file
@@ -54,15 +55,15 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`. (Samples are available in the sample_captchas folder for your convenience to drag and drop)
+1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`. (Samples are available in the sample_captchas folder for your convenience to drag and drop, please do not remove, they are also used for the background model build)
 
 2. Run the OCR script:
 
 ```bash
-python run.py --input images_to_test/ --output outputs/
+python run.py --input images_to_test/ --output output/
 ```
 
-3. Each result will be saved as a `.txt` file inside the `outputs/` folder, using the same base filename.
+3. Each result will be saved as a `.txt` file inside the `output/` folder, using the same base filename.
 
 You will also see prediction results printed to the console like:
 
@@ -127,7 +128,7 @@ From a trust and governance standpoint:
 
 ### Solution Formulation
 
-A staged approach was taken to assess both feasibility and longer-term viability. Early efforts focused on establishing baseline performance using pre-trained OCR models with image preprocessing. This allowed us to identify architectural weaknesses and transition toward more robust strategies.
+A staged approach was taken to assess both feasibility and longer-term viability. Early efforts focused on establishing baseline performance using pre-trained OCR models with image preprocessing. This allowed me to identify architectural weaknesses and transition toward more robust strategies.
 
 
 ### Strategies Hypothesized
@@ -169,11 +170,13 @@ This approach is more suitable for long-term robustness but introduces governanc
 
 ### Initial Experiments: OCR Baseline with Preprocessing
 
-Initial experiments used OCR libraries (EasyOCR and Tesseract) in conjunction with various preprocessing techniques aimed at improving text visibility and suppressing the uniform background.
+Initial experiments tested OCR libraries (EasyOCR and Tesseract) in conjunction with various preprocessing techniques aimed at improving text visibility and suppressing the uniform background.
 
 Preprocessing methods evaluated:
 - Grayscale conversion
 - Contrast and brightness adjustment
+- image upscaling
+- image cropping
 - Background subtraction
 - Binarization
 - Segmentation (character isolation)
@@ -193,7 +196,7 @@ Preprocessing methods evaluated:
 
 ---
 
-## 🧠 Author
+## Author
 
 Shaun Lai  
 [https://github.com/laishaun](https://github.com/laishaun)
