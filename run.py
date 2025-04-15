@@ -1,6 +1,6 @@
 import argparse
 import os
-from captcha.solver import Captcha
+from captcha_solver.SolverMain import Captcha
 
 def run_batch(input_dir, output_dir):
     os.makedirs(output_dir, exist_ok=True)
@@ -13,7 +13,8 @@ def run_batch(input_dir, output_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Captcha OCR")
-    parser.add_argument("--input", required=True, help="Folder containing captcha images")
-    parser.add_argument("--output", required=True, help="Folder to store prediction text files")
+    parser.add_argument("--input", default="images_to_test", help="Folder containing captcha images")
+    parser.add_argument("--output", default="output", help="Folder to store prediction text files")
     args = parser.parse_args()
+    
     run_batch(args.input, args.output)
