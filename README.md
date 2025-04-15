@@ -88,22 +88,6 @@ input00.jpg | PRED: EGYK4
 input01.jpg | PRED: 8Z7AG
 ```
 
----
-
-## Screenshots
-
-### Example Captcha Image
-
-![Sample Captcha](https://raw.githubusercontent.com/laishaun/captcha-ocr-solver-IMDA/main/test_images/input00.jpg)
-
-### Output Example
-
-```
-outputs/input00.txt → EGYK4
-```
-
----
-
 ## 🔍 How It Works
 
 The core logic is in `captcha/solver.py`. For each image:
