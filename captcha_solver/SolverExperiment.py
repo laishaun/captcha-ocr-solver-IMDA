@@ -62,7 +62,7 @@ def subtract_background(image_path, background):
     return norm
 
 # === MAIN PIPELINE ===
-def run_experiment_on_first_image():
+def run_experiment_on_all_images():
     sample_images = [os.path.join(SAMPLE_FOLDER, f) for f in os.listdir(SAMPLE_FOLDER) if f.lower().endswith(('.jpg', '.png'))]
     test_images = [f for f in os.listdir(TEST_FOLDER) if f.lower().endswith(('.jpg', '.png'))]
 
@@ -74,22 +74,25 @@ def run_experiment_on_first_image():
         print("No test CAPTCHA images found in 'images_to_test'.")
         return
 
-    # Use first test image for now
-    test_image_path = os.path.join(TEST_FOLDER, test_images[0])
-    result_file_path = os.path.join(OUTPUT_FOLDER, f"{os.path.splitext(test_images[0])[0]}_exp.txt")
-
     background = build_background_model(sample_images, threshold=80)
-    cleaned = subtract_background(test_image_path, background)
-
     reader = easyocr.Reader(['en'], gpu=False)
-    result = reader.readtext(cleaned, detail=0, paragraph=False)
-    predicted = ''.join(result).strip() if result else "No text detected"
 
-    with open(result_file_path, "w") as f:
-        f.write(predicted)
+    for fname in sorted(test_images):
+        test_image_path = os.path.join(TEST_FOLDER, fname)
+        result_file_path = os.path.join(OUTPUT_FOLDER, f"{os.path.splitext(fname)[0]}_exp.txt")
 
-    print(f"✅ Processed {os.path.basename(test_image_path)} → {predicted}")
+        try:
+            cleaned = subtract_background(test_image_path, background)
+            result = reader.readtext(cleaned, detail=0, paragraph=False)
+            predicted = ''.join(result).strip() if result else "No text detected"
+
+            with open(result_file_path, "w") as f:
+                f.write(predicted)
+
+            print(f"Processed {fname} → {predicted}")
+        except Exception as e:
+            print(f"Error processing {fname}: {e}")
 
 # === EXECUTION ===
 if __name__ == "__main__":
-    run_experiment_on_first_image()
+    run_experiment_on_all_images()

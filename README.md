@@ -4,27 +4,42 @@ This project implements a simple OCR pipeline to recognize 5-character captchas.
 
 ---
 
-## Function Overview
+## SolverMain Function Overview
 
 - Each captcha contains **exactly 5 characters**: uppercase letters (A–Z) and digits (0–9).
 - Font, spacing, and background are consistent across samples.
 - Strategy 2 focuses on **contrast enhancement** followed by **end-to-end OCR** using [EasyOCR](https://github.com/JaidedAI/EasyOCR).
 
 ---
+## SolverExperiment Function Overview
+Given the consistent visual characteristics of the CAPTCHA images — fixed background texture, uniform spacing, and a controlled character set — I hypothesized that a background subtraction method may isolate foreground text more effectively than general-purpose OCR alone. An alternate pipeline was developed to explore this idea.
+
+- Explore a low-compute, interpretable approach that leverages the high similarity between samples
+- Evaluate whether subtracting a statistical background model would improve text clarity for OCR systems
+- Compare the output quality to the baseline model (SolverMain.py) which uses brightness and contrast enhancement alone
+
+To achieve this, an alternate pipeline (SolverExperiment.py) was developed that:
+- Builds a statistical background model using a median composite of training images (sample_captchas/)
+- Subtracts the background from unseen CAPTCHA images (images_to_test/)
+- Applies normalization and OCR using EasyOCR
+- Saves prediction results to the same output/ directory, for side-by-side comparison
+
+This experiment was deliberately kept modular to avoid interference with the main solver and to allow for independent evaluation.
 
 ## Project Structure
 
 ```
 captcha-ocr-solver/
 ├── captcha_solver/
-│   └── SolverMain.py       # Contains the main captcha solver class
-├── images_to_test/         # Drop your input captcha images here
-├── output/                 # Output .txt files will be saved here
-├── run.py                  # Script to run OCR on a folder of images
-├── sample_captchas         # Sample images provided in the original challenge (also used as base set for background model)
-├── requirements.txt        # List of required Python packages
-├── .gitignore              # Standard Git ignore rules
-└── README.md               # This file
+│   └── SolverMain.py           # Contains the main captcha solver class
+│   └── SolverExperiment.py     # Contains the secondary experiment using background subtraction
+├── images_to_test/             # Drop your input captcha images here
+├── output/                     # Output .txt files will be saved here
+├── run.py                      # Script to run OCR on a folder of images
+├── sample_captchas             # Sample images provided in the original challenge (also used as base set for background model)
+├── requirements.txt            # List of required Python packages
+├── .gitignore                  # Standard Git ignore rules
+└── README.md                   # This file
 ```
 
 ---
@@ -60,7 +75,8 @@ pip install -r requirements.txt
 2. Run the OCR script:
 
 ```bash
-python run.py
+python run.pygit add .
+
 ```
 
 3. Each result will be saved as a `.txt` file inside the `output/` folder, using the same base filename.
@@ -183,8 +199,9 @@ Preprocessing methods evaluated:
 - Cropping and upscaling
 
 ***Results***:
-- Best result: 13/24 correct predictions using EasyOCR with grayscale and brightness/contrast tuning.
-- Worst results: Segmentation and background subtraction introduced artifacts that reduced accuracy.
+- Best result alpha: 13/24 correct predictions using EasyOCR with grayscale and brightness/contrast tuning.
+- Best results beta: 13/24 correct predictions using EasyOCR with background subtraction and grayscale tuning
+- Worst results: Segmentation together background subtraction introduced artifacts that reduced accuracy.
 - Tesseract generally underperformed due to its reliance on semantic and contextual information (absent in captchas).
 - This phase demonstrated the limitations of using pre-trained, black-box models in a constrained but unfamiliar visual domain.
 - Post-processing was discarded as erroneous predictions were not systematic in nature, and were unlikely to improve prediction results 
