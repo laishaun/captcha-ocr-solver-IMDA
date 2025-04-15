@@ -68,6 +68,8 @@ pip install -r requirements.txt
 
 ---
 
+Note:  > This project was built with Python 3.13.3 and may not work properly with older versions.
+
 ## Usage
 
 1. Place your test captcha images in the `images_to_test/` folder. Supported formats: `.jpg`, `.jpeg`, `.png`. (Samples are available in the sample_captchas folder for your convenience to drag and drop, please do not remove, they are also used for the background model build)
@@ -75,7 +77,7 @@ pip install -r requirements.txt
 2. Run the OCR script:
 
 ```bash
-python run.pygit add .
+python run.py
 
 ```
 
