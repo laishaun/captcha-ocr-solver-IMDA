@@ -199,9 +199,9 @@ Preprocessing methods evaluated:
 - Cropping and upscaling
 
 ***Results***:
-- Best result alpha: 13/24 correct predictions using EasyOCR with grayscale and brightness/contrast tuning.
-- Best results beta: 13/24 correct predictions using EasyOCR with background subtraction and grayscale tuning
-- Worst results: Segmentation together background subtraction introduced artifacts that reduced accuracy.
+- Best initial results: 13/24 correct predictions using EasyOCR with grayscale and brightness/contrast tuning.
+- Best tied results: 13/24 correct predictions using EasyOCR with background subtraction and grayscale tuning. 
+- Worst results: 5/24 correct predictions, segmentation together with background subtraction with Tesseract introduced artifacts that reduced accuracy.
 - Tesseract generally underperformed due to its reliance on semantic and contextual information (absent in captchas).
 - This phase demonstrated the limitations of using pre-trained, black-box models in a constrained but unfamiliar visual domain.
 - Post-processing was discarded as erroneous predictions were not systematic in nature, and were unlikely to improve prediction results 
@@ -209,7 +209,7 @@ Preprocessing methods evaluated:
 ## Notes
 
 - This is a proof-of-concept using basic image enhancement and OCR.
-- Future improvements could include character-level segmentation or a CNN+CTC model.
+- Future improvements could include brightness/contrast tuning and background subtraction as complementary preprocessing steps that can be layered with a domain-specific CNN if sufficient samples could be procured. Alternatively, based on the simplistic nature of the captcha generation, synthetic samples would likely be easy to generate as well. 
 
 ---
 
